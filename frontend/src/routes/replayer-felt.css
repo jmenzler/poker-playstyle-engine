@@ -1,0 +1,162 @@
+/* Scoped felt styles for the replayer route. Everything is namespaced under
+   [data-felt] so the attribute selector outranks the global
+   `* { border-radius: 0 !important }` in globals.css and the oval/round shapes
+   survive. Terminal-grey family only per D-08-1 (felt is desaturated #111315,
+   never a poker-table hue). */
+
+[data-felt] .felt-table {
+  position: relative;
+  width: 760px;
+  height: 420px;
+  background: #111315;
+  border: 2px solid #2a2d30;
+  border-radius: 50% / 50% !important;
+}
+
+[data-felt] .felt-seat {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+[data-felt] .felt-seat-cards {
+  display: flex;
+  gap: 3px;
+  margin-bottom: -10px; /* cards sit on top of the box, overlapping its top edge */
+  position: relative;
+  z-index: 2;
+}
+[data-felt] .felt-seat-box {
+  width: 132px;
+  padding: 14px 10px 6px;
+  background: #0d0d0d;
+  border: 1px solid #262626;
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+[data-felt] .felt-seat-box--actor {
+  border-color: #3b82f6;
+}
+[data-felt] .felt-seat-box--folded {
+  opacity: 0.45;
+}
+[data-felt] .felt-pill-banner {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 3px;
+  padding: 2px 0;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  white-space: nowrap;
+  border-radius: 3px;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 3;
+}
+[data-felt] .felt-card {
+  width: 46px;
+  height: auto;
+}
+
+[data-felt] .felt-seat--actor {
+  border: 1px solid #3b82f6 !important;
+}
+
+[data-felt] .felt-seat--folded {
+  opacity: 0.4;
+}
+
+[data-felt] .felt-chip,
+[data-felt] .felt-dealer {
+  border-radius: 50% !important;
+}
+
+[data-felt] .felt-chip {
+  width: 18px;
+  height: 18px;
+  background: #2a2d30;
+  border: 1px solid #3a3d40;
+}
+
+[data-felt] .felt-dealer {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #16a34a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 5;
+}
+
+[data-felt] .felt-card {
+  border-radius: 2px !important;
+}
+
+[data-felt] .felt-pill {
+  position: absolute;
+  padding: 2px 6px;
+  background: #0d0d0d;
+  border: 1px solid #3b82f6;
+  color: #d4d4d4;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+[data-felt] .felt-pot {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 44px);
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #d4d4d4;
+}
+
+[data-felt] .felt-bet {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: #d4d4d4;
+}
+
+@keyframes chip-to-pot {
+  from {
+    transform: translate(var(--from-x), var(--from-y));
+    opacity: 1;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+[data-felt] .chip-slide {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  background: #2a2d30;
+  border: 1px solid #3a3d40;
+  border-radius: 50% !important;
+  animation: chip-to-pot 900ms ease-out forwards;
+}
+
+[data-felt] .felt-seat-box--gap-hero {
+  border-color: #3b82f6;
+  border-width: 2px;
+}

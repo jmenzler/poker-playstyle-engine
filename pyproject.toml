@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "poker-engine"
+version = "0.1.0"
+description = "Poker decision engine — RAG-style strategy retrieval + solver-distillation auto-improvement loop"
+requires-python = ">=3.11"
+readme = "README.md"
+dependencies = [
+    "msgspec==0.21.1",
+    "pymilvus==3.0.0",
+    "psycopg[binary,pool]==3.3.4",
+    "numpy>=1.26,<2.0",
+    "structlog==25.5.0",
+    "scipy==1.17.1",
+    "rlcard==1.2.0",
+    "pyarrow>=17",
+    "fastapi==0.136.1",
+    "uvicorn[standard]==0.47.0",
+    "sse-starlette==3.4.4",
+    "pydantic==2.13.4",
+    # httpx is needed for FastAPI TestClient (Starlette dep) + future async HTTP calls.
+    "httpx>=0.27,<1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==9.0.3",
+    "pytest-asyncio==1.3.0",
+    "hypothesis==6.152.7",
+    "ruff==0.15.12",
+    "mypy==2.1.0",
+    "pre-commit>=3.7",
+]
+
+[project.scripts]
+poker-engine = "src.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+    "integration: requires explicitly configured external services",
+    "property: hypothesis property-based tests",
+    "e2e: requires a running API and configured external services",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_configs = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[[tool.mypy.overrides]]
+module = ["pymilvus.*", "rlcard.*"]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # bugbear
+    "UP",   # pyupgrade
+    "SIM",  # simplify
+    "RUF",  # ruff-specific
+]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B", "SIM"]
+# Research scripts are scratch / one-off analysis. Tolerate stylistic issues
+# (multi-statement lines for compact bucket maps, unicode × in prints, etc.).
+"research/**" = ["B", "SIM", "RUF001", "RUF002", "RUF046", "RUF059", "F401", "F541", "F841", "E701", "E702"]
+# Vendored third-party code — copied verbatim from upstream; do not apply project lint rules.
+"src/vendor/**" = ["F401", "RUF012", "RUF013", "B005", "B007", "B904", "B905", "UP", "SIM"]
+
+[dependency-groups]
+dev = [
+    "pytest==9.0.3",
+]
+

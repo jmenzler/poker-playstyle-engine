@@ -1,0 +1,6 @@
+tvd_floor = 0.15
+regression_delta = 0.05
+match_hands_hu = 10000
+match_hands_6max = 20000
+bootstrap_resamples = 1000
+ci_alpha = 0.05

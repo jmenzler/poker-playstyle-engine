@@ -1,0 +1,8 @@
+fastapi_host = "127.0.0.1"
+fastapi_port = 8765
+solver_max_concurrent = 1
+solver_timeout_s = 600.0
+eb_default_sigma2 = 0.05
+cache_ttl_s = 30
+ascii_sparkline_width = 10
+job_ttl_s = 3600

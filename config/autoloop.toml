@@ -1,0 +1,18 @@
+enabled = true
+tau_leak = 0.3
+min_observations = 20
+max_patches_per_run = 5
+n_hands_validation = 5000
+bootstrap_resamples = 1000
+ci_alpha = 0.05
+
+[algo]
+kind = "knn_rebalance"
+
+[autonomous]
+max_retries = 3
+sim_n_hands = 5000
+
+[solver_queue]
+n_workers = 2
+timeout_s = 3600.0
